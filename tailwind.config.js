@@ -13,13 +13,15 @@ module.exports = {
     },
     extend: {
       colors: {
-        black: '#0B0C10',
-        gray: '#1F2833',
-        pink: '#C5C6C7',
-        green: '#66FCF1',
-        dgreen: '#45A29E'
-      }
+        bwhite: '#EFFCEB',
+        black: '#112D32',
+        gray: '#f1f0eb',
+        brown: '#4F4A41',
+        lgreen: '#88BDBC',
+        dblue: '#254E58'
+      },
     },
+    
   },
   plugins: []
 }

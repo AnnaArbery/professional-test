@@ -5,13 +5,14 @@ import Notes from './components/Notes'
 import Main from './components/Main'
 
 function App() {
+
   return (
-    <div className='App'>
+    <div className='App flex flex-col min-h-screen'>
       <Header />
       <Notes />
-      <Main />    
+      <Main />
     </div>
-  );
+  )
 }
 
 export default App;

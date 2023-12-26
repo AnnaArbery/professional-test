@@ -7,33 +7,28 @@
 @layer base {
   body {
       font-family: 'Nunito';
-  }  
+  }
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #A4B4B6 rgba(112, 128, 144, 0.2);
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+      background-color: rgba(112, 128, 144, 0.2);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #A4B4B6;
+    border-radius: 11px;
+  }
 }
 
 @layer components {
   body {
-    @apply text-pink bg-gray
+    @apply text-black bg-lgreen
   }
   .container {
     @apply max-w-[1320px]
   }
-  .btn-round {
-    @apply relative w-[40px] h-[40px] border-green border-2 rounded-full flex items-center justify-center leading-none text-green font-bold mr-[20px];
-  }
-  .btn-round--choosen{
-    @apply hover:bg-green hover:text-black cursor-pointer ease-in duration-500 transition-colors;
-  }
-  .btn-round--active {
-    @apply bg-green text-black cursor-default;
-  }
-  .btn-round:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 1px;
-    left: 100%;
-    top: 50%;
-    border-top: 1px dashed #66FCF1;  
-  }
 }
-

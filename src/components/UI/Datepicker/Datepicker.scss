@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+
+.react-datepicker {
+  border: none;
+  color: #112D32;
+
+  &__header {
+    background: theme('colors.white');
+    border-color: theme('colors.brown');
+    text-align: left;
+  }  
+  &__navigation-icon::before {
+    border-color: theme('colors.dblue');
+    top: 11px;
+    border-width: 2px 2px 0 0;
+  }
+  &__current-month {
+    padding-left: 10px;
+    font-size: 14px;
+    color: theme('colors.dblue');
+  }
+  
+  &__navigation--previous {
+    left: auto;
+    right: 32px;
+  }
+  &__triangle::before,
+  &__triangle::after {
+    display: none
+  }
+  &__day {
+    &--selected,
+    &--keyboard-selected {
+      background: theme('colors.brown');
+      color: theme('colors.white');
+      &:hover {
+        background: theme('colors.dblue');
+      }
+      &.react-datepicker__day {
+        &:hover {
+          background: theme('colors.brown');
+          color: theme('colors.white');
+        }
+      }
+    }
+    
+    &--keyboard-selected {
+      background: none;
+      color: #000;
+    }
+    
+    &:hover {
+      background: theme('colors.bwhite');
+    }
+  }
+}

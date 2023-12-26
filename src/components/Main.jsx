@@ -1,13 +1,12 @@
 import React from 'react';
+import FormRegister from './FormRegister';
 
 const Main = () => {
   return (
-    <div className='main py-3'>
+    <div className='main py-10 flex-1'>
       <div className='container'>
-        <h1 className='text-3xl font-bold underline text-green md:text-red-700'>
-          Hello world!
-        </h1>
-        <button className='btn-general'>Далее</button>
+        <h1 className='font-bold text-5xl mb-7 text-dblue'>Заполните анкету</h1>
+        <FormRegister/>
       </div>
     </div>
   )

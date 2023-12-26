@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .radio-group {    
+    &__items {
+      @apply flex 
+    }
+    &__title {
+      @apply block text-sm
+    }
+    &__status {
+      @apply block px-5 py-3 bg-white text-black duration-700 transition-colors cursor-pointer
+    }
+    &__name {
+      &:nth-child(1) {
+        .radio-group__status {
+          @apply rounded-tl-md rounded-bl-md
+        }
+      }
+      &:nth-child(2) {
+        .radio-group__status {
+          @apply rounded-tr-md rounded-br-md
+        }
+      }
+      @apply w-1/2 text-center
+    }
+    &__radio {
+      &:checked + .radio-group__status {
+        @apply bg-brown text-white cursor-default
+      }
+      @apply hidden
+    }
+    @apply w-full pb-5
+  }
+}

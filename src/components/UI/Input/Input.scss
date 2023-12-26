@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .field {
+    &__label {
+      @apply block text-sm
+    }
+    &__value {
+      @apply px-5 py-3 rounded-md bg-white focus:bg-bwhite outline-none text-black duration-700 transition-colors w-full
+    }
+    &__error {
+      @apply absolute -bottom-1 block text-red-600 text-base text-right w-full
+    }
+    @apply relative pb-5
+  }
+}

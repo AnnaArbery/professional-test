@@ -1,12 +1,20 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const dotenv = require('dotenv');
 // const autoprefixer = require('autoprefixer');
 // const CopyPlugin = require('copy-webpack-plugin');
 
 const MODE = process.argv.includes('development') ? 'development': 'production';
 const DIST_DIR = 'docs';
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 const config = {
   mode: MODE,
@@ -80,6 +88,7 @@ const config = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
     }),
+    new webpack.DefinePlugin(envKeys),
     // new CopyPlugin({//при наличии папки с файлами, иначе ошибка
     //   patterns: [
     //     { from: path.resolve(__dirname, 'src/store'), to: 'store' },

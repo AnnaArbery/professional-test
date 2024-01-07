@@ -8,10 +8,10 @@
       @apply flex 
     }
     &__title {
-      @apply block text-sm
+      @apply block text-base
     }
     &__status {
-      @apply block px-5 py-3 bg-white text-black duration-700 transition-colors cursor-pointer
+      @apply block px-5 py-3 bg-white text-black duration-700 transition-colors cursor-pointer hover:bg-bwhite
     }
     &__name {
       &:nth-child(1) {

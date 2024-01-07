@@ -6,12 +6,12 @@ const Header = () => {
   return (
     <div className='header'>
       <div className='container'>
-        <div className='flex py-7 items-center justify-between'>
+        <div className='flex py-7 items-center justify-between md:flex-col'>
           <a href='' className='flex text-brown align-center'>
             <Hat className='w-8 fill-brown mr-1 py'/>
             <h3 className='font-bold uppercase text-xl'>Proftest</h3>
           </a>
-          <nav>
+          <nav className='md:pt-4'>
             <ul className='flex aligin-center header__steps'>
               <li className='btn-round btn-round--complete'></li>
               <li className='btn-round btn-round--complete'></li>

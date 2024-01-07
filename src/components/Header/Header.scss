@@ -21,7 +21,7 @@
       @apply bg-brown text-bwhite cursor-default;
     }
     &:not(:last-child)::after {
-      @apply absolute content-[''] w-5 h-[1px] left-[105%] top-1/2 border-t border-dashed border-brown
+      @apply absolute content-[''] w-5 h-[1px] left-[105%] top-1/2 border-t border-dashed border-brown md:w-4
     }
     &--complete {
       &::before {
@@ -29,6 +29,6 @@
       }
       @apply bg-brown text-bwhite cursor-default;
     }  
-    @apply relative w-10 h-10 border-brown border-2 rounded-full flex items-center justify-center leading-none text-brown font-bold mr-[20px];
+    @apply relative w-10 h-10 border-brown border-2 rounded-full flex items-center justify-center leading-none text-brown font-bold mr-[20px] md:w-7 md:h-7 md:mr-[16px];
   }
 }

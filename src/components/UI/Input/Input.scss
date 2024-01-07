@@ -5,7 +5,7 @@
 @layer components {
   .field {
     &__label {
-      @apply block text-sm
+      @apply block text-base
     }
     &__value {
       @apply px-5 py-3 rounded-md bg-white focus:bg-bwhite outline-none text-black duration-700 transition-colors w-full

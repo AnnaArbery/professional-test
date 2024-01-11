@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const dotenv = require('dotenv');
 // const autoprefixer = require('autoprefixer');
-// const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const MODE = process.argv.includes('development') ? 'development': 'production';
 const DIST_DIR = 'docs';
@@ -89,11 +89,11 @@ const config = {
       filename: 'css/[name].css'
     }),
     new webpack.DefinePlugin(envKeys),
-    // new CopyPlugin({//при наличии папки с файлами, иначе ошибка
-    //   patterns: [
-    //     { from: path.resolve(__dirname, 'src/store'), to: 'store' },
-    //   ],
-    // }),
+    new CopyPlugin({//при наличии папки с файлами, иначе ошибка
+      patterns: [
+        { from: path.resolve(__dirname, 'src/store'), to: 'store' },
+      ],
+    }),
   ],
   optimization: {
     minimizer: [],

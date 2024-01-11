@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .checkbox {
+    &__input {    
+      &:checked {
+        & + .checkbox__title {
+          @apply bg-brown text-white;
+        }
+      }
+      @apply hidden
+    }
+    &__title {
+      @apply block px-5 py-3 rounded-md bg-white focus:bg-bwhite outline-none text-black duration-700 transition-colors cursor-pointer hover:bg-bwhite
+    }
+    @apply block mb-2
+  }
+}

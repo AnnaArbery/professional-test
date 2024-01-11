@@ -1,63 +1,61 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-// import {todoList} from './mock-items'
+import {createSlice} from '@reduxjs/toolkit'
+
+let initialUser = window.localStorage.getItem('user');
+initialUser = initialUser
+  ? JSON.parse(initialUser)
+  : {
+    name: '',
+    year: '',
+    email: '',
+    sex: 'male',
+    status: 'manager',
+    date: +new Date(),
+  };
+let initialAnswers = window.localStorage.getItem('answers');
+initialAnswers = initialAnswers
+  ? JSON.parse(initialAnswers)
+  : {};
 
 const initialState = {
-  // todos: todoList,
-  status: null
-}
-
-// const fetchTodos = createAsyncThunk(
-//   'todos/fetchTodos',
-//   async function() {
-//     const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-//     const data = await res.json();
-//     return data;
-//   }
-// );
+  user: initialUser,
+  step: 1,
+  auth: true,
+  answers: initialAnswers,
+};
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addUser({todos}, {payload}) {
-      todos.push({
-        id: new Date().toISOString(),
-        title: payload.text,
-        completed: false
-      })
+    setUser(state, { payload }) {
+      const date = +payload.date;
+      state.user = { ...payload, date };
+      state.auth = true;
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
-    // removeTodo(state, {payload}) {
-    //   state.todos = state.todos.filter(({id}) => id !== payload.id)
-    // },
-    // completeTodo(state, {payload}) {
-    //   state.todos.map(todo => {
-    //     if (todo.id === payload.id) todo.completed = !todo.completed
-    //     return todo;
-    //   })
-    // },
-    // updateTodoText(state, {payload}) {
-    //   state.todos.map(todo => {
-    //     if (todo.id === payload.id) todo.title = payload.value
-    //     return todo;
-    //   })
-    // },
+    setStep(state, {payload}) {
+      if (!state.auth) return;
+      state.step = payload;
+    },
+    addAnswers(state, {payload: { id, module, val } }) {
+      if (!state.answers[id]) state.answers[id] = {};
+      if (!state.answers[id][module]) state.answers[id][module] = [];
+      if (!state.answers[id][module].includes(val)) {
+        state.answers[id][module].push(val);
+      }
+      localStorage.setItem('answers', JSON.stringify(state.answers));
+    },
+    removeAnswers(state, { payload: { id, module, val } }) {
+      state.answers[id][module] = state.answers[id][module].filter((value) => value !== val);
+      localStorage.setItem('answers', JSON.stringify(state.answers));
+    },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(fetchTodos.pending, state => {
-  //       state.status = 'loading'
-  //     })
-  //     .addCase(fetchTodos.fulfilled, (state, action) => {
-  //       state.todos = action.payload
-  //       state.status = 'loaded';
-  //     })
-  //     .addCase(fetchTodos.rejected, (state, action) => {
-  //       state.status = 'error'
-  //     });
-  // }
-})
+});
 
-
-
-export const {reducer: userReducer, actions: userActions } = userSlice;
-// export {fetchTodos};
+export const {
+  setStep,
+  setUser,
+  addAnswers,
+  removeAnswers,
+} = userSlice.actions;
+export default userSlice.reducer;

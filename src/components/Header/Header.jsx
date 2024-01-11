@@ -1,8 +1,16 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { clsx } from 'clsx';
+import { setStep } from '../../store/userSlice'
 import {ReactComponent as Hat} from './hat.svg'
 import './Header.scss'
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const {step, auth } = useSelector(state => state.user);
+  const count = useSelector(state => state.steps.count);
+  const steps = new Array(count + 2).fill('');
+
   return (
     <div className='header'>
       <div className='container'>
@@ -13,13 +21,18 @@ const Header = () => {
           </a>
           <nav className='md:pt-4'>
             <ul className='flex aligin-center header__steps'>
-              <li className='btn-round btn-round--complete'></li>
-              <li className='btn-round btn-round--complete'></li>
-              <li className='btn-round btn-round--checked'></li>
-              <li className='btn-round btn-round--able'></li>
-              <li className='btn-round'></li>
-              <li className='btn-round'></li>
-              <li className='btn-round'></li>
+              {steps.map((el,idx) =>
+                <li
+                  className={clsx('btn-round',
+                    auth ? 'btn-round--able': '',
+                    step === idx ? 'btn-round--checked': '',
+                    step > idx ? 'btn-round--complete': ''
+                  )}
+                  key={idx}
+                  onClick={() => dispatch(setStep(idx))}
+                >
+                </li>
+              )}
             </ul>
           </nav>
         </div>

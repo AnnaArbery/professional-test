@@ -8,7 +8,7 @@ const useLockBodyScroll = () => {
     const padding = window.innerWidth - document.body.offsetWidth;
 
     document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = padding + 'px';
+    document.body.style.paddingRight = `${padding}px`;
     return () => {
       document.body.style.overflow = originalOverflow;
       document.body.style.paddingRight = originalPadding;

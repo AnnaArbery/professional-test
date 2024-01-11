@@ -31,4 +31,7 @@
   .container {
     @apply max-w-[1320px]
   }
+  .title-h2 {   
+    @apply font-bold text-4xl text-dblue mb-2
+  }
 }

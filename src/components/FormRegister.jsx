@@ -1,29 +1,28 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser, setStep } from '../store/userSlice'
 import Input from './UI/Input/Input'
 import RadioGroup from './UI/RadioGroup/RadioGroup'
 import Datepicker from './UI/Datepicker/Datepicker'
 import Button from './UI/Button/Button';
 
 const FormRegister = () => {
+  const {user, step} = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
   const {
     handleSubmit,
     control, 
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      name: '',
-      year: '',
-      email: '',
-      sex: 'male',
-      status: 'manager',
-      date: new Date(),
-    },
+    defaultValues: user,
     mode: 'onChange'
   });
 
   const submit = data => {
-    console.log(data)
+    dispatch(setUser(data));
+    dispatch(setStep(step + 1));
   }
 
   return (
@@ -71,20 +70,21 @@ const FormRegister = () => {
             <Controller
               name='sex'
               control={control}
-              render={({field: { onChange } }) => 
+              render={({field: { value, onChange } }) => 
                 <RadioGroup label='Пол'>
                   <RadioGroup.Button
-                    defaultChecked
                     name='sex'
                     title='Мужской'
                     onChange={onChange}
                     value='male'
+                    checked={value === 'male'}
                   />
                   <RadioGroup.Button
                     name='sex'
                     title='Женский'
                     onChange={onChange}
-                    value='female'                  
+                    value='female'
+                    checked={value === 'female'}                 
                   />
                 </RadioGroup>
               }
@@ -94,20 +94,21 @@ const FormRegister = () => {
             <Controller
               name='status'
               control={control}
-              render={({field: { onChange } }) => 
+              render={({field: { value, onChange } }) => 
                 <RadioGroup label='Круг обязанностей'>
                   <RadioGroup.Button
-                    defaultChecked
                     name='status'
                     title='Управление'
                     onChange={onChange}
                     value='manager'
+                    checked={value === 'manager'}               
                   />
                   <RadioGroup.Button
                     name='status'
                     title='Исполнение'
                     onChange={onChange}
-                    value='executor'                  
+                    value='executor'
+                    checked={value === 'executor'}              
                   />
                 </RadioGroup> 
               }

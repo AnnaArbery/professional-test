@@ -29,6 +29,6 @@
       }
       @apply bg-brown text-bwhite;
     }  
-    @apply relative w-10 h-10 border-brown border-2 rounded-full flex items-center justify-center leading-none text-brown font-bold mr-[20px] md:w-7 md:h-7 md:mr-[16px];
+    @apply relative w-10 h-10 border-brown border-2 rounded-full flex items-center justify-center leading-none text-brown font-bold mr-[20px] md:w-7 md:h-7 md:mr-[12px] md:text-sm;
   }
 }

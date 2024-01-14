@@ -18,7 +18,7 @@ initialAnswers = initialAnswers
 
 const initialState = {
   user: initialUser,
-  step: 1,
+  step: 6,
   auth: true,
   answers: initialAnswers,
 };
@@ -47,6 +47,12 @@ const userSlice = createSlice({
     },
     removeAnswers(state, { payload: { id, module, val } }) {
       state.answers[id][module] = state.answers[id][module].filter((value) => value !== val);
+      if (state.answers[id][module].length === 0) {
+        delete state.answers[id][module];
+      }
+      if (Object.keys(state.answers[id]).length === 0) {
+        delete state.answers[id];
+      }
       localStorage.setItem('answers', JSON.stringify(state.answers));
     },
   },

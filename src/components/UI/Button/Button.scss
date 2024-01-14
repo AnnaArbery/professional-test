@@ -4,6 +4,6 @@
 
 @layer components {
   .btn-general {
-    @apply bg-brown px-7 py-4 rounded-3xl text-bwhite hover:bg-dblue hover:text-bwhite duration-700 transition-colors font-bold uppercase text-sm tracking-wider mt-7;
+    @apply bg-brown px-7 py-4 rounded-3xl text-bwhite hover:bg-dblue hover:text-bwhite duration-700 transition-colors font-bold uppercase tracking-wider mt-7 sm:px-5 text-sm sm:text-xs;
   }
 }

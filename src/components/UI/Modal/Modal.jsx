@@ -14,8 +14,9 @@ const Modal = ({showModal, setShowModal, renderContent}) => {
     <div className={`modal ${showModal ? '' : 'modal--hidden' }`}>
       <div className='modal__content' ref={clickRef}>
         <button
-          className='absolute right-5 top-3 w-7 h-7 hover:opacity-80 transition-colors duration-700'
+          className='absolute right-5 top-3 w-7 h-7 hover:opacity-70 transition-colors duration-1000'
           onClick={setShowModal}
+          aria-label='Close'
         >
           <img src={close} alt=''/>
         </button>

@@ -32,6 +32,29 @@
     @apply max-w-[1320px]
   }
   .title-h2 {   
-    @apply font-bold text-4xl text-dblue mb-2
+    @apply font-bold text-4xl text-dblue mb-2 sm:text-2xl
   }
+}
+.card-checkbox-enter {
+  position: relative;
+  transform: translateX(-350px);
+  opacity: 0;
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      transition-delay: (300 - $i*30)*1ms
+    }
+  }
+}
+.card-checkbox-enter-active {
+  transform: translateX(0px);
+  opacity: 1;
+  transition: all 200ms ease;
+}
+.card-checkbox-exit {
+  opacity: 1;
+}
+.card-checkbox-exit-active {
+  transform: translateX(-350px);
+  opacity: 0;
+  transition: all 100ms ease;
 }

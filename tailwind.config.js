@@ -21,8 +21,7 @@ module.exports = {
         lgreen: '#88BDBC',
         dblue: '#254E58'
       },
-    },
-    
+    },    
   },
   plugins: []
 }

@@ -3,8 +3,6 @@ import useClickOutside from '../../../hooks/useClickOutside'
 import './Dropdown.scss'
 import {ReactComponent as ArrowDown} from './arrow-down.svg'
 
-
-
 const Dropdown = ({title, list, cb}) => {
   const clickRef = useRef();
   const [open, setOpen] = useState(false)

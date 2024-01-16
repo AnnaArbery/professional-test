@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .counter {
+    &__btn {
+      @apply flex w-1/3 items-center justify-center text-2xl font-bold hover:text-dblue transition-colors duration-700 leading-4 shrink-0
+    }
+    &__value {
+      @apply w-1/3 shrink-0 text-center font-bold
+    }
+
+    @apply flex items-center justify-between w-[110px]
+  }
+}

@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .table {
+    &__row {
+      &:not(:last-child) {
+        @apply border-b border-b-black-200
+      }
+      &--header {
+        @apply text-sm sm:text-xs
+      }
+      &--balls {
+        .table__col:nth-child(n+2) {
+          @apply justify-center
+        }
+        @apply font-bold
+      }
+      @apply flex
+    }
+    &__col {
+      &:not(:last-child) {
+        @apply border-r border-r-black-200
+      }
+      &:nth-child(1) {
+        @apply w-[200px] text-sm sm:w-[150px] sm:text-xs
+      }
+      &--balls {
+        @apply text-dblue w-[90px] justify-center font-bold
+      }
+      &--counter {
+        .counter {
+          display: none;
+        }
+        &:hover {
+          .counter {
+            display: flex;
+          }
+        }
+        @apply hover:bg-bwhite transition-colors duration-700 justify-center
+      }
+      width: calc((100% - 290px)/4);
+      @media screen and (max-width: 540px) {
+        width: calc((100% - 240px)/4);
+      }
+      @apply flex items-center justify-between shrink-0 px-5 py-1 leading-5 min-h-[70px] sm:px-2 sm:min-h-[50px]
+    }
+    @apply w-full rounded-md min-w-[800px]
+  }
+  .table-wrap {
+    @apply overflow-auto
+  }
+
+  .btn-i {
+    @apply flex items-center justify-center shrink-0 rounded-full border border-dblue ml-1 w-[17px] h-[17px] font-bold text-dblue text-xs hover:bg-dblue hover:text-white transition duration-700
+  }
+}

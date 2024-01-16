@@ -15,14 +15,14 @@ const Header = () => {
     <div className='header'>
       <div className='container'>
         <div className='flex py-7 items-center justify-between md:flex-col'>
-          <a href='' className='flex text-brown align-center'>
+          <a href='/' className='flex text-brown align-center'>
             <Hat className='w-8 fill-brown mr-1 py'/>
             <h3 className='font-bold uppercase text-xl'>Proftest</h3>
           </a>
           <nav className='md:pt-4'>
-            <ul className='flex aligin-center header__steps'>
+            <div className='flex aligin-center header__steps'>
               {steps.map((el,idx) =>
-                <li
+                <button
                   className={clsx('btn-round',
                     auth ? 'btn-round--able': '',
                     step === idx ? 'btn-round--checked': '',
@@ -30,10 +30,10 @@ const Header = () => {
                   )}
                   key={idx}
                   onClick={() => dispatch(setStep(idx))}
-                >
-                </li>
+                  aria-label={idx}
+                > </button>
               )}
-            </ul>
+            </div>
           </nav>
         </div>
       </div>

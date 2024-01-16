@@ -10,7 +10,6 @@ const StepItem = ({title, id, desc, questions={}, step}) => {
   const {items = [], max, id: idQuestions} = questions[module-1] || {};
   const ref = useRef(null);
   const dispatch = useDispatch();
-  // const answers = useSelector(state => state.user.answers);
   
   const handleCheckbox = (count, val) => {
     if (selected === max && count > 0) return;

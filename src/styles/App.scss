@@ -34,6 +34,9 @@
   .title-h2 {   
     @apply font-bold text-4xl text-dblue mb-2 sm:text-2xl
   }
+  .title-h3 {   
+    @apply font-bold text-2xl text-dblue mb-2 sm:text-xl
+  }
 }
 .card-checkbox-enter {
   position: relative;
@@ -57,4 +60,16 @@
   transform: translateX(-350px);
   opacity: 0;
   transition: all 100ms ease;
+}
+
+.b-txt {
+  p {
+    margin: 7px 0;
+  }
+  h2 {
+    &:not(:first-child) {
+      @apply mt-6
+    }      
+    @apply font-bold text-3xl text-dblue mb-2
+  }
 }

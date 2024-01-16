@@ -13,17 +13,11 @@
     &--hidden {
       @apply hidden
     }
+    &--no-py {
+      .modal__wrap {
+        @apply py-0
+      }
+    }
     @apply fixed bg-black-700 h-full w-full flex items-center justify-center top-0 left-0
-  }
-  .b-txt {
-    p {
-      margin: 7px 0;
-    }
-    h2 {
-      &:not(:first-child) {
-        @apply mt-6
-      }      
-      @apply font-bold text-3xl text-dblue mb-2
-    }
   }
 }

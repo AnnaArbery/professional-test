@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .dropdown {
+    &__title {
+      @apply text-black-700 font-bold text-left w-full hover:text-lgreen transition-colors duration-700 py-1
+    }
+    &__list {
+      @apply absolute overflow-hidden top-full bg-bwhite shadow-md rounded-lg h-[200px]
+    }
+    &__wrap {
+      @apply overflow-auto h-full
+    }
+    &__svg {
+      @apply w-4 h-3 fill-current
+    }
+    &__item {
+      &--active {
+        @apply bg-dblue text-white
+      }
+      @apply block px-3 py-2 hover:bg-dblue hover:text-white transition-colors duration-700 w-full text-left
+    }
+
+    @apply relative w-full
+  }
+}

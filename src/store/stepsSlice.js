@@ -9,7 +9,7 @@ const initialState = {
 const fetchSteps = createAsyncThunk(
   'steps/fetchSteps',
   async () => {
-    const res = await fetch('./store/steps.json')
+    const res = await fetch(process.env.URL_STEPS)
     const data = await res.json();
     return data;
   }

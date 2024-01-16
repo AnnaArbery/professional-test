@@ -5,13 +5,13 @@ import close from './close.svg'
 import useClickOutside from '../../../hooks/useClickOutside'
 import useLockBodyScroll from '../../../hooks/useLockBodyScroll'
 
-const Modal = ({showModal, setShowModal, renderContent}) => {
+const Modal = ({showModal, setShowModal, renderContent, addClass = ''}) => {
   const clickRef = useRef();
   useClickOutside(clickRef, setShowModal);
   useLockBodyScroll();
 
   return createPortal(
-    <div className={`modal ${showModal ? '' : 'modal--hidden' }`}>
+    <div className={`modal ${showModal ? '' : 'modal--hidden' } ${addClass}`}>
       <div className='modal__content' ref={clickRef}>
         <button
           className='absolute right-5 top-3 w-7 h-7 hover:opacity-70 transition-colors duration-1000'

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import FormRegister from './FormRegister';
 import Steps from './Steps/Steps';
-import Table from './Table';
+import StepLast from './Steps/StepLast';
 
 
 const Main = () => {
@@ -13,7 +13,7 @@ const Main = () => {
       <div className='container'>
         {step === 0 && <FormRegister/>}
         {step > 0 && step < 6 && <Steps/>}
-        {step === 6 && <Table/>}
+        {step === 6 && <StepLast/>}
       </div>
     </div>
   )

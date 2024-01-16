@@ -26,8 +26,6 @@ const UserDate = () => {
   const keysUser = Object.keys(user);
   const keysSteps = Object.keys(answers);
 
-  // console.log(keysAnswers)
-
   return (
     <div>
       <div>
@@ -43,11 +41,11 @@ const UserDate = () => {
         <h2 className='title-h2'>Ответы на вопросы</h2>
         {keysSteps && keysSteps.map( (value) => (
           <div className='py-2 border-b border-b-brown border-1' key={value}>
-            <span className='block w-[200px] font-bold text-brown'>Шаг {+value + 1}</span>
+            <span className='block w-[200px] font-bold text-brown'>Модуль {value}</span>
             <div>
               { Object.keys(answers[value]).map(module => (
                 <div key={module} className='ml-4 mb-2 sm:ml-0'>
-                  <span className='block font-bold underline text-sm text-brown'>Модуль {module}: </span>
+                  <span className='block font-bold underline text-sm text-brown'>Вопрос {module}: </span>
                   <span>{answers[value][module].length > 0 && answers[value][module].map(answer => (
                     <div key={answer} className='ml-1 italic sm:ml-0'>- {answer}</div>
                   ))}</span>

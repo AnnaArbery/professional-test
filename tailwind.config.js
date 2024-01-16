@@ -16,6 +16,7 @@ module.exports = {
         bwhite: '#EFFCEB',
         black: '#112D32',
         'black-700': 'rgba(17, 45, 50,0.7)',
+        'black-200': 'rgba(0, 0, 0,0.2)',
         gray: '#f1f0eb',
         brown: '#4F4A41',
         lgreen: '#88BDBC',

@@ -15,7 +15,8 @@
   
   .btn-round {
     &--able {
-      @apply hover:bg-brown hover:text-white cursor-pointer ease-in duration-500 transition-colors;
+      cursor: pointer!important;
+      @apply hover:bg-brown hover:text-white ease-in duration-500 transition-colors;
     }
     &--checked {
       @apply bg-brown text-bwhite cursor-default;
@@ -29,6 +30,6 @@
       }
       @apply bg-brown text-bwhite;
     }  
-    @apply relative w-10 h-10 border-brown border-2 rounded-full flex items-center justify-center leading-none text-brown font-bold mr-[20px] md:w-7 md:h-7 md:mr-[12px] md:text-sm;
+    @apply relative w-10 h-10 border-brown border-2 rounded-full flex items-center justify-center leading-none text-brown font-bold mr-[20px] md:w-7 md:h-7 md:mr-[12px] md:text-sm cursor-default;
   }
 }

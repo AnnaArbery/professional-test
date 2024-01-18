@@ -9,7 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const MODE = process.argv.includes('development') ? 'development': 'production';
-const DIST_DIR = 'docs';
+const DIST_DIR = 'public';
 
 const env = dotenv.config().parsed;
 const envKeys = Object.keys(env).reduce((prev, next) => {

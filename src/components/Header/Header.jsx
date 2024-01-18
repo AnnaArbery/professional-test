@@ -21,7 +21,7 @@ const Header = () => {
           </a>
           <nav className='md:pt-4'>
             <div className='flex aligin-center header__steps'>
-              {steps.map((el,idx) =>
+              {steps.map((el, idx) =>
                 <button
                   className={clsx('btn-round',
                     auth ? 'btn-round--able': '',

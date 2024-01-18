@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser, setStep } from '../store/userSlice'
 import Input from './UI/Input/Input'
 import RadioGroup from './UI/RadioGroup/RadioGroup'
-// import Datepicker from './UI/Datepicker/Datepicker'
 import Button from './UI/Button/Button';
+
 const Datepicker = React.lazy(() => import('./UI/Datepicker/Datepicker'));
 
 const FormRegister = () => {

@@ -38,7 +38,7 @@ const initialEmploymentTitle = JSON.parse(window.localStorage.getItem('employmen
 const initialState = {
   user: initialUser,
   step: 0,
-  auth: true,
+  auth: false,
   answers: initialAnswers,
   needs: initialNeeds,
   employment: initialEmloyment,

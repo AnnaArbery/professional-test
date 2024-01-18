@@ -46,7 +46,7 @@ const UserDate = () => {
         )}
       </div>
 
-      {keysSteps &&
+      {keysSteps.length > 0 &&
         <div className='mt-10'>
           <h2 className='title-h2'>Ответы на вопросы</h2>
           {keysSteps.map(value => (
@@ -67,7 +67,7 @@ const UserDate = () => {
         </div>
       }
 
-      {keysNeeds.length &&
+      {keysNeeds.length > 0 &&
         <div className='mt-10'>
           <h2 className='title-h2'>Таблица потребностей</h2>
           {keysNeeds.map(value => 
@@ -79,7 +79,7 @@ const UserDate = () => {
         </div>
       }
 
-      {keysNeeds.length && 
+      {keysNeeds.length > 0 && 
         <div className='mt-10'>
           <h2 className='title-h2'>Таблица профессий</h2>
           {employment.map((value, idx) => {

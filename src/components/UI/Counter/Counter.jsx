@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import './Counter.scss'
 
-const Counter = ({cb}) => {
-  const [count, setCount] = useState(0);
+const Counter = ({cb, value}) => {
+  const [count, setCount] = useState(value || 0);
 
   const handleCount = add => () => {
     if ( count === 3 && add > 0 ) return;
     if ( count === 0 && add < 0 ) return;
     setCount(prev => prev + add)
-    cb(add)
+    cb(add, count + add)
   }
 
   return (

@@ -6,6 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const dotenv = require('dotenv');
 // const autoprefixer = require('autoprefixer');
 const CopyPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const MODE = process.argv.includes('development') ? 'development': 'production';
 const DIST_DIR = 'docs';
@@ -94,6 +95,7 @@ const config = {
         { from: path.resolve(__dirname, 'src/store'), to: 'store' },
       ],
     }),
+    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     minimizer: [],

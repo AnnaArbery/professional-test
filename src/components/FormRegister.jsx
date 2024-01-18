@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser, setStep } from '../store/userSlice'
 import Input from './UI/Input/Input'
 import RadioGroup from './UI/RadioGroup/RadioGroup'
-import Datepicker from './UI/Datepicker/Datepicker'
+// import Datepicker from './UI/Datepicker/Datepicker'
 import Button from './UI/Button/Button';
+const Datepicker = React.lazy(() => import('./UI/Datepicker/Datepicker'));
 
 const FormRegister = () => {
   const {user, step} = useSelector(state => state.user);
@@ -136,13 +137,15 @@ const FormRegister = () => {
             />          
           </div>
           <div className='col w-1/2 px-3 mb-4 md:w-full'>
-            <Controller
-              name='date'
-              control={control}
-              render={({ field: { value, onChange } }) =>
-                <Datepicker selected={value} onChange={onChange} />
-              }
-            />
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <Controller
+                name='date'
+                control={control}
+                render={({ field: { value, onChange } }) =>
+                  <Datepicker selected={value} onChange={onChange} />
+                }
+              />
+            </Suspense>
           </div>
         </div>
         <Button>Следующий этап &#8594;</Button>

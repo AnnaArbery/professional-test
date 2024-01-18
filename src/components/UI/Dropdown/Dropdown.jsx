@@ -3,15 +3,17 @@ import useClickOutside from '../../../hooks/useClickOutside'
 import './Dropdown.scss'
 import {ReactComponent as ArrowDown} from './arrow-down.svg'
 
-const Dropdown = ({title, list, cb}) => {
+const Dropdown = ({title, list, cb, selected}) => {
   const clickRef = useRef();
+  const initialCurrent = !selected ? null : list.findIndex(val => val === selected);
   const [open, setOpen] = useState(false)
-  const [current, setCurrent] = useState(null);
+  const [current, setCurrent] = useState(initialCurrent);
   useClickOutside(clickRef, setOpen);
 
   const handleClick = (idx) => () => {
     setCurrent(idx);
     if(cb) cb(list[idx]);
+    setOpen(false)
   }
 
   return (

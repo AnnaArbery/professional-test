@@ -14,8 +14,9 @@ const Table = () => {
   const dispatch = useDispatch();
   const {status, tabs = []} = useSelector(state => state.tabs);
   const {employment = [], titles = []} = useSelector(state => state.content);
+  const {employment: employmentUser, employmentTitle} = useSelector(state => state.user);
   const [showModal, setShowModal] = useState(null);
-  const [totalCol, setTotalCol] = useState([0,0,0,0]);
+  const [totalCol, setTotalCol] = useState(employmentUser);
 
   useFetchRedux(fetchTabs, status === 'loaded');
 
@@ -25,7 +26,7 @@ const Table = () => {
     setTotalCol([...nextTotalCol]);
   }
 
-  const saveTitle = (id) => (title)=> {
+  const saveTitle = id => title=> {
     dispatch(setEmploymentTitle({id, title}))
   }
 
@@ -35,9 +36,9 @@ const Table = () => {
 
         <div className='table__row table__row--header'>
           <Table.Td>Потребности</Table.Td>
-          {titles.length && titles.map((title, idx) =>
+          {titles.length && titles.map((title, col) =>
             <Table.Td addClass='table__col--selector' key={title}>
-              <Dropdown title={title} id={idx} list={employment} cb={saveTitle(idx)} />
+              <Dropdown title={title} list={employment} cb={saveTitle(col)} selected={employmentTitle[col]}/>
             </Table.Td>
           )}
           <Table.Td addClass='table__col--balls'>Баллы</Table.Td>
@@ -50,7 +51,7 @@ const Table = () => {
             setShowModal={() => setShowModal(id)}
             handleTotalCol={handleTotalCol}
             titlesCol={titles}
-            id={id}
+            row={id}   
           />
         )}
 
@@ -74,25 +75,30 @@ const Table = () => {
   );
 };
 
-const TrBody = ({id, tab, setShowModal, handleTotalCol, titlesCol}) => {
+const TrBody = ({row, tab, setShowModal, handleTotalCol, titlesCol}) => {
   const dispatch = useDispatch();
-  const [totalRow, setTotalRow] = useState(0);
+  const {needs: needsUser, selected} = useSelector(state => state.user);
+  const [totalRow, setTotalRow] = useState(needsUser[row] || 0);
 
-  const handleCount = idx => add => {
+  const handleCount = idx => (add, count) => {
     setTotalRow(prev => prev + add)
     handleTotalCol(idx, add);
-    dispatch(setNeeds({title: tab, value: totalRow + add, id: [idx, id]}))
+    dispatch(setNeeds({
+      title: row,
+      value: totalRow + add,
+      id: [idx, row], count
+    }))
   }
 
   return (
     <div className='table__row'>
-      <Table.Td key={id}>
+      <Table.Td key={row}>
         <span>{tab}</span>
         <button className='btn-i' onClick={setShowModal}>i</button>
       </Table.Td>
-      {titlesCol.length && titlesCol.map((value, idx) =>
+      {titlesCol.length && titlesCol.map((value, col) =>
         <Table.Td addClass='table__col--counter' key={value}>
-          <Counter cb={handleCount(idx)} />
+          <Counter cb={handleCount(col)} value={selected[`${col}${row}`]} />
         </Table.Td>
       )}
       <Table.Td addClass='table__col--balls'>

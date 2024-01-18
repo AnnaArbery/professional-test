@@ -16,14 +16,34 @@ initialAnswers = initialAnswers
   ? JSON.parse(initialAnswers)
   : {};
 
+const localSelected = JSON.parse(window.localStorage.getItem('selected')) || {};
+const keysLocalSelected = Object.keys(localSelected)
+const initialNeeds = {};
+const initialEmloyment = [0,0,0,0];
+
+if (keysLocalSelected.length > 0) {
+  keysLocalSelected.forEach(value => {
+    const [col, row] = value;
+
+    if (!initialEmloyment[col]) initialEmloyment[col] = 0;
+    initialEmloyment[col] +=  localSelected[value];
+
+    if (!initialNeeds[row]) initialNeeds[row] = 0;
+    initialNeeds[row] += localSelected[value];
+  })
+}
+
+const initialEmploymentTitle = JSON.parse(window.localStorage.getItem('employmentTitle')) || [];
+
 const initialState = {
   user: initialUser,
-  step: 6,
+  step: 0,
   auth: true,
   answers: initialAnswers,
-  needs: {},
-  employment: [],
-  employmentTitle: [],
+  needs: initialNeeds,
+  employment: initialEmloyment,
+  employmentTitle: initialEmploymentTitle,
+  selected: localSelected
 };
 
 const userSlice = createSlice({
@@ -48,14 +68,17 @@ const userSlice = createSlice({
       }
       localStorage.setItem('answers', JSON.stringify(state.answers));
     },
-    setNeeds(state, {payload: {title, value}} ) {
+    setNeeds(state, {payload: {title, value, id, count}} ) {
       state.needs[title] = value;
+      state.selected[`${id[0]}${id[1]}`] = count;
+      localStorage.setItem('selected', JSON.stringify(state.selected));
     },
     setEmpoyment(state, {payload}) {
       state.employment = [...payload]
     },
     setEmploymentTitle(state, {payload:{id, title}}) {
-      state.employmentTitle[id] = title
+      state.employmentTitle[id] = title;
+      localStorage.setItem('employmentTitle', JSON.stringify(state.employmentTitle));
     },
     removeAnswers(state, { payload: { id, module, val } }) {
       state.answers[id][module] = state.answers[id][module].filter((value) => value !== val);

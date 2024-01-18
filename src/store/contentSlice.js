@@ -24,10 +24,13 @@ const contentSlice = createSlice({
       .addCase(fetchContent.pending, state => {
         state.status = 'loading'
       })
-      .addCase(fetchContent.fulfilled, (state, action) => {
-        state.describe = action.payload[0] || '';
-        state.titles = action.payload[1] || [];
-        state.employment = action.payload[2] || [];
+      .addCase(fetchContent.fulfilled, (state, {payload}) => {
+        const [descrbe = '', titles = [], employment = []] = payload;
+
+        state.describe = descrbe;
+        state.titles = titles;
+        state.employment = employment;
+
         state.status = 'loaded';
       })
       .addCase(fetchContent.rejected, (state) => {

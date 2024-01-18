@@ -11,7 +11,7 @@ const Dropdown = ({title, list, cb}) => {
 
   const handleClick = (idx) => () => {
     setCurrent(idx);
-    if(cb) cb(idx);
+    if(cb) cb(list[idx]);
   }
 
   return (
@@ -22,7 +22,7 @@ const Dropdown = ({title, list, cb}) => {
       </button>
       {open && <div className='dropdown__list'>
         <div className='dropdown__wrap'>
-          {list.map((val,idx) => <button key='val' className={`dropdown__item${current === idx ? ' dropdown__item--active': ''}`} onClick={handleClick(idx)}>{val}</button>)}
+          {list.map((val,idx) => <button key={val} className={`dropdown__item${current === idx ? ' dropdown__item--active': ''}`} onClick={handleClick(idx)}>{val}</button>)}
         </div>
       </div>}
     </div>

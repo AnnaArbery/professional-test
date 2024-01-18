@@ -14,7 +14,9 @@ const defineValue = (val, name) => {
 }
 
 const UserDate = () => {
-  const {user, answers} = useSelector(state => state.user);
+  const {user, answers, needs, employment, employmentTitle} = useSelector(state => state.user);
+  const {titles:titlesDefault = []} = useSelector(state => state.content);
+
   const titles = {
     'name': 'Имя',
     'email': 'Email',
@@ -25,36 +27,68 @@ const UserDate = () => {
   }
   const keysUser = Object.keys(user);
   const keysSteps = Object.keys(answers);
+  const keysNeeds = Object.keys(needs);
 
   return (
     <div>
       <div>
         <h2 className='title-h2'>Регистрационные данные</h2>
-        {keysUser && keysUser.map( (value, idx) => (
+        {keysUser && keysUser.map( value => 
           <div className='flex py-2 border-b border-b-brown border-1 sm:block' key={value}>
             <span className='block w-[200px] font-bold text-brown'>{titles[value]}:</span>
             <span>{defineValue(user[value], value)}</span>
-          </div>)
+          </div>
         )}
       </div>
-      <div className='mt-8'>
-        <h2 className='title-h2'>Ответы на вопросы</h2>
-        {keysSteps && keysSteps.map( (value) => (
-          <div className='py-2 border-b border-b-brown border-1' key={value}>
-            <span className='block w-[200px] font-bold text-brown'>Модуль {value}</span>
-            <div>
-              { Object.keys(answers[value]).map(module => (
-                <div key={module} className='ml-4 mb-2 sm:ml-0'>
-                  <span className='block font-bold underline text-sm text-brown'>Вопрос {module}: </span>
-                  <span>{answers[value][module].length > 0 && answers[value][module].map(answer => (
-                    <div key={answer} className='ml-1 italic sm:ml-0'>- {answer}</div>
-                  ))}</span>
-                </div>
-              ))}
+
+      {keysSteps &&
+        <div className='mt-8'>
+          <h2 className='title-h2'>Ответы на вопросы</h2>
+          {keysSteps.map(value => (
+            <div className='py-2 border-b border-b-brown border-1' key={value}>
+              <span className='block w-[200px] font-bold text-brown'>Модуль {value}</span>
+              <div>
+                { Object.keys(answers[value]).map(module => (
+                  <div key={module} className='ml-4 mb-2 sm:ml-0'>
+                    <span className='block font-bold underline text-sm text-brown'>Вопрос {module}: </span>
+                    <span>{answers[value][module].length > 0 && answers[value][module].map(answer => (
+                      <div key={answer} className='ml-1 italic sm:ml-0'>- {answer}</div>
+                    ))}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      }
+
+      {keysNeeds.length &&
+        <div className='mt-8'>
+          <h2 className='title-h2'>Таблица потребностей</h2>
+          {keysNeeds.map(value => 
+            <div className='flex py-2 justify-between border-b border-b-brown border-1 sm:block' key={value}>
+              <span className='block font-bold text-brown'>{value}</span>
+              <span>{needs[value]}</span>
+            </div>            
+          )}
+        </div>
+      }
+
+      {keysNeeds.length && 
+        <div className='mt-8'>
+          <h2 className='title-h2'>Таблица профессий</h2>
+          {employment.map((value,idx) => {
+            if (value === 0) return false;
+            return (
+              <div className='flex py-2 justify-between border-b border-b-brown border-1 sm:block' key={value}>
+                <span className='block font-bold text-brown'>{employmentTitle[idx] || titlesDefault[idx]}</span>
+                <span>{value}</span>
+              </div>
+            )}
+          )}
+        </div>
+      }
+
     </div>
   );
 };

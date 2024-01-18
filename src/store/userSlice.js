@@ -21,6 +21,9 @@ const initialState = {
   step: 6,
   auth: true,
   answers: initialAnswers,
+  needs: {},
+  employment: [],
+  employmentTitle: [],
 };
 
 const userSlice = createSlice({
@@ -45,6 +48,15 @@ const userSlice = createSlice({
       }
       localStorage.setItem('answers', JSON.stringify(state.answers));
     },
+    setNeeds(state, {payload: {title, value}} ) {
+      state.needs[title] = value;
+    },
+    setEmpoyment(state, {payload}) {
+      state.employment = [...payload]
+    },
+    setEmploymentTitle(state, {payload:{id, title}}) {
+      state.employmentTitle[id] = title
+    },
     removeAnswers(state, { payload: { id, module, val } }) {
       state.answers[id][module] = state.answers[id][module].filter((value) => value !== val);
       if (state.answers[id][module].length === 0) {
@@ -63,5 +75,8 @@ export const {
   setUser,
   addAnswers,
   removeAnswers,
+  setNeeds,
+  setEmpoyment,
+  setEmploymentTitle
 } = userSlice.actions;
 export default userSlice.reducer;

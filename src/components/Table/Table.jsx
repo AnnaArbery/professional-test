@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx'
 import useFetchRedux from '../../hooks/useFetchRedux';
+import { setNeeds, setEmpoyment, setEmploymentTitle } from '../../store/userSlice'
 import { fetchTabs } from '../../store/tabsSlice';
 import TableDescribe from './TableDescribe';
 import Modal from '../UI/Modal/Modal'
@@ -10,6 +11,7 @@ import Dropdown from '../UI/Dropdown/Dropdown'
 import './Table.scss'
 
 const Table = () => {
+  const dispatch = useDispatch();
   const {status, tabs = []} = useSelector(state => state.tabs);
   const {employment = [], titles = []} = useSelector(state => state.content);
   const [showModal, setShowModal] = useState(null);
@@ -18,8 +20,13 @@ const Table = () => {
   useFetchRedux(fetchTabs, status === 'loaded');
 
   const handleTotalCol = (col, count) => {
-    const nextTotalCol = totalCol.map((el,id) => (id === col) ? el + count : el)
-    setTotalCol([...nextTotalCol])
+    const nextTotalCol = totalCol.map((el,id) => (id === col) ? el + count : el);
+    dispatch(setEmpoyment([...nextTotalCol]))
+    setTotalCol([...nextTotalCol]);
+  }
+
+  const saveTitle = (id) => (title)=> {
+    dispatch(setEmploymentTitle({id, title}))
   }
 
   return (
@@ -30,7 +37,7 @@ const Table = () => {
           <Table.Td>Потребности</Table.Td>
           {titles.length && titles.map((title, idx) =>
             <Table.Td addClass='table__col--selector' key={title}>
-              <Dropdown title={title} id={idx} list={employment} />
+              <Dropdown title={title} id={idx} list={employment} cb={saveTitle(idx)} />
             </Table.Td>
           )}
           <Table.Td addClass='table__col--balls'>Баллы</Table.Td>
@@ -43,6 +50,7 @@ const Table = () => {
             setShowModal={() => setShowModal(id)}
             handleTotalCol={handleTotalCol}
             titlesCol={titles}
+            id={id}
           />
         )}
 
@@ -67,22 +75,24 @@ const Table = () => {
 };
 
 const TrBody = ({id, tab, setShowModal, handleTotalCol, titlesCol}) => {
+  const dispatch = useDispatch();
   const [totalRow, setTotalRow] = useState(0);
 
-  const handleCountNew = idx => add => {
+  const handleCount = idx => add => {
     setTotalRow(prev => prev + add)
     handleTotalCol(idx, add);
+    dispatch(setNeeds({title: tab, value: totalRow + add, id: [idx, id]}))
   }
 
   return (
-    <div className='table__row' key={id}>
+    <div className='table__row'>
       <Table.Td key={id}>
         <span>{tab}</span>
         <button className='btn-i' onClick={setShowModal}>i</button>
       </Table.Td>
       {titlesCol.length && titlesCol.map((value, idx) =>
         <Table.Td addClass='table__col--counter' key={value}>
-          <Counter cb={handleCountNew(idx)} />
+          <Counter cb={handleCount(idx)} />
         </Table.Td>
       )}
       <Table.Td addClass='table__col--balls'>

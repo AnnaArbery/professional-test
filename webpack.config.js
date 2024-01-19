@@ -3,19 +3,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const dotenv = require('dotenv');
+const Dotenv = require('dotenv-webpack');
 // const autoprefixer = require('autoprefixer');
 const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const MODE = process.argv.includes('development') ? 'development': 'production';
 const DIST_DIR = 'public';
-
-const env = dotenv.config().parsed;
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next]);
-  return prev;
-}, {});
 
 const config = {
   mode: MODE,
@@ -89,13 +83,12 @@ const config = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
     }),
-    new webpack.DefinePlugin(envKeys),
+    new Dotenv({ systemvars: true }),// для деплоя вместо обычного dotenv
     new CopyPlugin({//при наличии папки с файлами, иначе ошибка
       patterns: [
         { from: path.resolve(__dirname, 'src/store'), to: 'store' },
       ],
     }),
-    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     minimizer: [],
@@ -165,9 +158,8 @@ if(MODE == 'production') {
 }
 config.module.rules.push(configImg);
 
-module.exports = config;
+if (process.argv.includes('--analyze')) {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
 
-// npm run dev
-// @babel/core, babel-loader, @babel/preset-env, @babel/preset-typescript @babel/preset-react
-// youtube.com/watch?v=5j19we1xpSA (Лаврик,2021), 21:40-модульные стили, 54:20-split-chunk
-// react react-dom @babel/preset-react
+module.exports = config;

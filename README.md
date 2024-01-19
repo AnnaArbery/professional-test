@@ -1,7 +1,16 @@
 ## Проект тестирование с регистрацией
-`webpack react tailwind`
+`react webpack eslint react-form-hook redux-toolkit taiwind`
+
+Форма с валидацией - необходимо заполнить данные о себе, после этого появлется тест с выбором утвеждений из предложенного списка и таблица с оценкой определенных позиций.
+На последнем шаге так же можно проверить введенные данные в модалке единым списком.
 
 `npm run start` - запуск разработки
-
 `npm run build` - запуск сборки
+`npm run analyz` - анализ сборки
+
+
+### Variableы env: 
+  URL_STEPS, URL_TABS, URL_CONTENT
+
+### Deploy в папку build
 

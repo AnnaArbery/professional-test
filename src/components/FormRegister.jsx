@@ -5,6 +5,7 @@ import { setUser, setStep } from '../store/userSlice'
 import Input from './UI/Input/Input'
 import RadioGroup from './UI/RadioGroup/RadioGroup'
 import Button from './UI/Button/Button';
+import DatepickerCal from './UI/DatepickerCal/DatepickerCal';
 
 const Datepicker = React.lazy(() => import('./UI/Datepicker/Datepicker'));
 
@@ -22,9 +23,11 @@ const FormRegister = () => {
   });
 
   const submit = data => {
-    dispatch(setUser(data));
+    console.log(data, '' + new Date(data.date), 'submit')
+    dispatch(setUser({...data, date: +new Date(data.date)}));
     dispatch(setStep(step + 1));
   }
+
 
   return (
     <>
@@ -137,15 +140,17 @@ const FormRegister = () => {
             />          
           </div>
           <div className='col w-1/2 px-3 mb-4 md:w-full'>
-            <Suspense fallback={<div>Загрузка...</div>}>
-              <Controller
-                name='date'
-                control={control}
-                render={({ field: { value, onChange } }) =>
-                  <Datepicker selected={value} onChange={onChange} />
-                }
-              />
-            </Suspense>
+            {/* <Suspense fallback={<div>Загрузка...</div>}> */}
+            <Controller
+              name='date'
+              control={control}
+              render={({ field: { ref, ...field } }) => 
+              <DatepickerCal {...field } />
+                // <DatepickerCal {...field }selected={value} onChange={onChange} ref={ref} />
+                // <Datepicker selected={value} onChange={onChange} />
+              }
+            />
+            {/* </Suspense> */}
           </div>
         </div>
         <Button>Следующий этап &#8594;</Button>

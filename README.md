@@ -9,7 +9,7 @@
 `npm run analyz` - анализ сборки
 
 
-### Variableы env: 
+### Variables env: 
   URL_STEPS, URL_TABS, URL_CONTENT
 
 ### Deploy в папку build

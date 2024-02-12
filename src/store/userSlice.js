@@ -51,8 +51,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, { payload }) {
-      const date = +payload.date;
-      state.user = { ...payload, date };
+      state.user = { ...payload };
       state.auth = true;
       localStorage.setItem('user', JSON.stringify(state.user));
     },

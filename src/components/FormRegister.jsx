@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser, setStep } from '../store/userSlice'
 import Input from './UI/Input/Input'
 import RadioGroup from './UI/RadioGroup/RadioGroup'
 import Button from './UI/Button/Button';
-import DatepickerCal from './UI/DatepickerCal/DatepickerCal';
+
+const DatepickerCal = React.lazy(() => import('./UI/DatepickerCal/DatepickerCal'));
+
 
 const FormRegister = () => {
   const {user, step} = useSelector(state => state.user);
@@ -24,7 +26,6 @@ const FormRegister = () => {
     dispatch(setUser({...data, date: +new Date(data.date)}));
     dispatch(setStep(step + 1));
   }
-
 
   return (
     <>
@@ -137,13 +138,15 @@ const FormRegister = () => {
             />          
           </div>
           <div className='col w-1/2 px-3 mb-4 md:w-full'>
-            <Controller
-              name='date'
-              control={control}
-              render={({ field: { value, onChange, ref } }) => 
-                <DatepickerCal selected={value} onChange={onChange} inputRef={ref} />
-              }
-            />
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <Controller
+                name='date'
+                control={control}
+                render={({ field: { value, onChange, ref } }) => 
+                  <DatepickerCal selected={value} onChange={onChange} inputRef={ref} />
+                }
+              />
+            </Suspense>
           </div>
         </div>
         <Button>Следующий этап &#8594;</Button>

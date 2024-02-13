@@ -1,11 +1,11 @@
-import React, {useState, forwardRef, useEffect, useRef, useCallback} from 'react';
+import React, {useEffect, useRef} from 'react';
 import flatpickr from 'flatpickr';
 // import DatePicker, { registerLocale } from 'react-datepicker';
 // import ru from 'date-fns/locale/ru';
 // registerLocale('ru', ru)
 import './DatepickerCal.scss';
 
-const DatepickerCal= props => (
+const DatepickerCal = props => (
   <div className='field'>
     <label className='field__label'>Дата заполнения</label>
     <DatepickerCal.Input {...props}/>
@@ -27,7 +27,8 @@ const Input = ({selected, onChange, inputRef }) => {
     flatpickr(ref.current, {
       dateFormat: 'd.m.Y',
       maxDate: '15.12.2040',
-      defaultDate: selected
+      position: 'above',
+      defaultDate: selected,
     });
   }, [selected])
 

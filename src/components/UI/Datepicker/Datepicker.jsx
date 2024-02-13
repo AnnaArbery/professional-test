@@ -1,8 +1,9 @@
 import React, {useState, forwardRef} from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-registerLocale('ru', ru)
+
 import './Datepicker.scss';
+registerLocale('ru', ru)
 
 const Datepicker = (props) => (
   <div className='field'>

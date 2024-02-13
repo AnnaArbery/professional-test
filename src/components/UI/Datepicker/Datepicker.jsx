@@ -4,7 +4,7 @@ import ru from 'date-fns/locale/ru';
 registerLocale('ru', ru)
 import './Datepicker.scss';
 
-const Datepicker = ({title, ...props}) => (
+const Datepicker = (props) => (
   <div className='field'>
     <label className='field__label'>Дата заполнения</label>
     <DatePicker
@@ -16,7 +16,7 @@ const Datepicker = ({title, ...props}) => (
   </div>
 );
 
-Datepicker.Input = React.forwardRef(({ ...props }, ref) => (
+Datepicker.Input = React.forwardRef((props, ref) => (
   <input
     ref={ref}
     {...props}

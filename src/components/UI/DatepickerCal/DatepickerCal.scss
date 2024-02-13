@@ -2,4 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '../../../../node_modules/flatpickr/dist/flatpickr.min.css'
+@import '../../../../node_modules/flatpickr/dist/flatpickr.min.css';
+
+@layer components {
+  .flatpickr-day.selected {
+    @apply bg-dblue border-dblue
+  }
+}

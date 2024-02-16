@@ -1,16 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-let initialUser = window.localStorage.getItem('user');
-initialUser = initialUser
-  ? JSON.parse(initialUser)
-  : {
-    name: '',
-    year: '',
-    email: '',
-    sex: 'male',
-    status: 'manager',
-    date: +new Date(),
-  };
+const defalutUser = {
+  name: '',
+  year: '',
+  email: '',
+  sex: 'male',
+  status: 'manager',
+  date: +new Date(),
+}
+let localUser = window.localStorage.getItem('user') ;
+if (localUser) {
+  localUser = JSON.parse(localUser)
+}
+
 let initialAnswers = window.localStorage.getItem('answers');
 initialAnswers = initialAnswers
   ? JSON.parse(initialAnswers)
@@ -36,7 +38,7 @@ if (keysLocalSelected.length > 0) {
 const initialEmploymentTitle = JSON.parse(window.localStorage.getItem('employmentTitle')) || [];
 
 const initialState = {
-  user: initialUser,
+  user: localUser || defalutUser,
   step: 0,
   auth: false,
   answers: initialAnswers,

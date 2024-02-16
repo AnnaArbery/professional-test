@@ -16,7 +16,7 @@ const useScript = (src) => {
       script.src = src
       script.async = true
       script.setAttribute('data-status', 'loading')
-      document.body.appendChild(script)
+      document.head.prepend(script)
 
       const setDataStatus = (event) => {
         script.setAttribute(

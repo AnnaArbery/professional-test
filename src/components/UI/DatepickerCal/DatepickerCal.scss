@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '../../../../node_modules/flatpickr/dist/flatpickr.min.css';
+
+@import './jsCalendar';
 
 @layer components {
-  .flatpickr-day.selected {
-    @apply bg-dblue border-dblue
+  .jsCalendar {
+    @apply absolute bottom-[70px]
+  }
+  .hidden-datapicker {
+    @apply hidden
   }
 }

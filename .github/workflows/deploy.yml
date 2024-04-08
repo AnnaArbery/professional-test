@@ -33,9 +33,9 @@ jobs:
       FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
     steps:
       - name: Checkout
-        uses: actions/checkout@latest
+        uses: actions/checkout@v4
       - name: Set up Node
-        uses: actions/setup-node@latest
+        uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: 'npm'
@@ -44,11 +44,11 @@ jobs:
       - name: Build
         run: npm run build
       - name: Setup Pages
-        uses: actions/configure-pages@latest
+        uses: actions/configure-pages@v3
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@latest
+        uses: actions/upload-pages-artifact@v2
         with:
           path: './public'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@latest
+        uses: actions/deploy-pages@v2

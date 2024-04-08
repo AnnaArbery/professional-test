@@ -8,13 +8,12 @@ const defineValue = (val, name) => {
     const date = new Date(val);
     const day = date.getDay();
     const month = date.getMonth() + 1;
-    const minutes = date.getMinutes();
-    return `${day > 9 ? day : `0${day}`}.${month > 9 ? month : `0${month}`}.${date.getFullYear()} ${date.getHours()}:${minutes > 9 ? minutes : `0${minutes}`}`;
+    return `${day > 9 ? day : `0${day}`}.${month > 9 ? month : `0${month}`}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
   }
   return val;
 }
 
-const ResultUserCheck = () => {
+const UserDate = () => {
   const {user, answers, needs, employment, employmentTitle} = useSelector(state => state.user);
   const {titles: titlesDefault = [], employment: employmentList = []} = useSelector(state => state.content);
   const {tabs = []} = useSelector(state => state.tabs);
@@ -99,4 +98,4 @@ const ResultUserCheck = () => {
   );
 };
 
-export default ResultUserCheck;
+export default UserDate;

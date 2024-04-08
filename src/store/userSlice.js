@@ -1,27 +1,40 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const defalutUser = {
-  name: '',
-  year: '',
-  email: '',
-  sex: 'male',
-  status: 'manager',
-  date: +new Date(),
+const defalutState = {
+  user: {
+    name: '',
+    year: '',
+    email: '',
+    sex: 'male',
+    status: 'manager',
+    date: +new Date(),
+  },
+  step: 0,
+  auth: false,
+  answers: {},
+  needs: 0,
+  employment: 0,
+  employmentTitle: [],
+  selected: {}
 }
+
 let localUser = window.localStorage.getItem('user') ;
 if (localUser) {
   localUser = JSON.parse(localUser)
 }
 
-let initialAnswers = window.localStorage.getItem('answers');
-initialAnswers = initialAnswers
-  ? JSON.parse(initialAnswers)
-  : {};
+let localAnswers = window.localStorage.getItem('answers');
+if (localAnswers) {
+  localAnswers = JSON.parse(localAnswers)
+}
 
-const localSelected = JSON.parse(window.localStorage.getItem('selected')) || {};
+let localSelected = window.localStorage.getItem('selected');
+if (localSelected) {
+  localSelected = JSON.parse(localSelected)
+}
 const keysLocalSelected = Object.keys(localSelected)
 const initialNeeds = {};
-const initialEmloyment = [0,0,0,0];
+const initialEmloyment = [0, 0, 0, 0];
 
 if (keysLocalSelected.length > 0) {
   keysLocalSelected.forEach(value => {
@@ -35,22 +48,29 @@ if (keysLocalSelected.length > 0) {
   })
 }
 
-const initialEmploymentTitle = JSON.parse(window.localStorage.getItem('employmentTitle')) || [];
+const defaultEmploymentTitle = [];
+let localEmploymentTitle = window.localStorage.getItem('employmentTitle');
+if (localEmploymentTitle) {
+  localEmploymentTitle = JSON.parse(localEmploymentTitle);
+}
 
-const initialState = {
+const localState = {
   user: localUser || defalutUser,
   step: 0,
   auth: false,
-  answers: initialAnswers,
+  answers: localAnswers || defaultAnswers,
   needs: initialNeeds,
   employment: initialEmloyment,
-  employmentTitle: initialEmploymentTitle,
+  employmentTitle: localEmploymentTitle || defaultEmploymentTitle,
   selected: localSelected
 };
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState : {
+    ...defalutState,
+    ...localState
+  },
   reducers: {
     setUser(state, { payload }) {
       state.user = { ...payload };
@@ -91,6 +111,9 @@ const userSlice = createSlice({
       }
       localStorage.setItem('answers', JSON.stringify(state.answers));
     },
+    clear(state) {
+      return defalutState;
+    }
   },
 });
 
@@ -101,6 +124,7 @@ export const {
   removeAnswers,
   setNeeds,
   setEmpoyment,
-  setEmploymentTitle
+  setEmploymentTitle,
+  clear
 } = userSlice.actions;
 export default userSlice.reducer;

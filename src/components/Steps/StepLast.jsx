@@ -1,11 +1,34 @@
 import React, {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { clear } from '../../store/userSlice'
 import Button from '../UI/Button/Button'
 import Modal from '../UI/Modal/Modal';
 import ResultUserCheck from '../ResultUserCheck';
 import Table from '../Table/Table';
+import { loginAnonymously } from '../../firebase/authController';
+import { addData } from '../../firebase/dataController';
 
 const StepLast = () => {
   const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState(null);
+  const user = useSelector(state => state.user);
+  // const dispatch = useDispatch();
+  const handleSubmit = async () => {
+    try {
+      const res = await loginAnonymously();
+      const { uid } = res.user;
+
+      addData(uid, {
+        ...user,
+        create: +new Date()
+      });
+
+      // console.log(user);
+      // dispatch(clear());
+    } catch(err) {
+      console.log(err.message)
+    }
+  }
 
   return (
     <div>
@@ -19,7 +42,7 @@ const StepLast = () => {
 
       <div className='flex justify-end'>
         <Button callback={() =>setShowModal(true)}>Проверить</Button>
-        <Button addClass='ml-2'>Отправить</Button>
+        <Button addClass='ml-2' callback={() =>handleSubmit()}>Отправить</Button>
       </div>
 
       {showModal && <Modal showModal={showModal} setShowModal={() => setShowModal(false)} renderContent={ResultUserCheck} />}

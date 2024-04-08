@@ -1,32 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { clear } from '../../store/userSlice'
 import Button from '../UI/Button/Button'
 import Modal from '../UI/Modal/Modal';
 import ResultUserCheck from '../ResultUserCheck';
 import Table from '../Table/Table';
-import { loginAnonymously } from '../../firebase/authController';
+import NotifySendForm from '../NotifySendForm';
+import { loginAnonymously, logout } from '../../firebase/authController';
 import { addData } from '../../firebase/dataController';
 
 const StepLast = () => {
   const [showModal, setShowModal] = useState(false);
-  const [status, setStatus] = useState(null);
+  const [statusModal, setStatusModal] = useState(false);
   const user = useSelector(state => state.user);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const handleSubmit = async () => {
     try {
       const res = await loginAnonymously();
       const { uid } = res.user;
 
-      addData(uid, {
+      await addData(uid, {
         ...user,
         create: +new Date()
       });
 
-      // console.log(user);
-      // dispatch(clear());
+      setStatusModal( () => 'sended');
+      logout();
+
+      setTimeout(() => {
+        dispatch(clear());
+      }, 5000)
+
     } catch(err) {
-      console.log(err.message)
+      console.log(err.message);
+      setStatusModal( 'error');
     }
   }
 
@@ -45,7 +52,17 @@ const StepLast = () => {
         <Button addClass='ml-2' callback={() =>handleSubmit()}>Отправить</Button>
       </div>
 
-      {showModal && <Modal showModal={showModal} setShowModal={() => setShowModal(false)} renderContent={ResultUserCheck} />}
+      {statusModal && <Modal
+        showModal={statusModal}
+        setShowModal={() => setStatusModal(false)}
+        renderContent={() => NotifySendForm({statusModal})}
+        addClass='modal--no-full'
+      />}
+      {showModal && <Modal
+        showModal={showModal}
+        setShowModal={() => setShowModal(false)}
+        renderContent={ResultUserCheck}
+      />}
     </div>
   );
 };

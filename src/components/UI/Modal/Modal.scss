@@ -18,6 +18,12 @@
         @apply py-0
       }
     }
+    &--no-full {
+      .modal__content {
+        min-height: 200px;
+        height: auto;        
+      }
+    }
     @apply fixed bg-black-700 h-full w-full flex items-center justify-center top-0 left-0
   }
 }

@@ -111,7 +111,12 @@ const userSlice = createSlice({
       }
       localStorage.setItem('answers', JSON.stringify(state.answers));
     },
-    clear(state) {
+    clear() {
+      localStorage.removeItem('user');
+      localStorage.removeItem('answers');
+      localStorage.removeItem('selected');
+      localStorage.removeItem('employmentTitle');
+
       return defalutState;
     }
   },

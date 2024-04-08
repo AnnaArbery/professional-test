@@ -31,8 +31,9 @@ if (localAnswers) {
 let localSelected = window.localStorage.getItem('selected');
 if (localSelected) {
   localSelected = JSON.parse(localSelected)
+  
 }
-const keysLocalSelected = Object.keys(localSelected)
+const keysLocalSelected = Object.keys(localSelected || []);
 const initialNeeds = {};
 const initialEmloyment = [0, 0, 0, 0];
 
@@ -48,21 +49,18 @@ if (keysLocalSelected.length > 0) {
   })
 }
 
-const defaultEmploymentTitle = [];
 let localEmploymentTitle = window.localStorage.getItem('employmentTitle');
 if (localEmploymentTitle) {
   localEmploymentTitle = JSON.parse(localEmploymentTitle);
 }
 
 const localState = {
-  user: localUser || defalutUser,
-  step: 0,
-  auth: false,
-  answers: localAnswers || defaultAnswers,
-  needs: initialNeeds,
-  employment: initialEmloyment,
-  employmentTitle: localEmploymentTitle || defaultEmploymentTitle,
-  selected: localSelected
+  user: localUser || {...defalutState.user},
+  answers: localAnswers || {...defalutState.answers},
+  needs: initialNeeds || {...defalutState.needs},
+  employment: initialEmloyment || {...defalutState.employment},
+  employmentTitle: localEmploymentTitle || {...defalutState.employmentTitle},
+  selected: localSelected || {...defalutState.selected},
 };
 
 const userSlice = createSlice({

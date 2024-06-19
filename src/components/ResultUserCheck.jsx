@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 
 const defineValue = (val, name) => {
-  if (name === 'sex') return (name === 'male') ? 'Мужской':'Женский';
-  if (name === 'status') return (name === 'manager') ? 'Управление':'Исполнение';
+  if (name === 'sex') return (val === 'male') ? 'Мужской':'Женский';
+  if (name === 'status') return (val === 'manager') ? 'Управление':'Исполнение';
   if (name === 'date') {
     const date = new Date(val);
     const day = date.getDay();

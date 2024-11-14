@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "es5",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "lib": ["dom", "esnext"],
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ES2015"
+    }
+  },
+  "exclude": ["node_modules", "dist", "build", ".vscode"]
+}

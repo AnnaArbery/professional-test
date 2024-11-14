@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -13,7 +12,7 @@ const DIST_DIR = 'public';
 
 const config = {
   mode: MODE,
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     filename: 'js/[name].js?v=[contenthash]',
     path: path.resolve(__dirname, DIST_DIR),
@@ -34,7 +33,7 @@ const config = {
     // historyApiFallback: true,//для роутинга,только для dev-servera-youtu.be/acAH2_YT6bs?t=5022
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   module: {
     rules: [
@@ -51,7 +50,7 @@ const config = {
         use: useCss()
       },
       {
-        test: /\.jsx?$/,
+        test: /\.[tj]sx?$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',

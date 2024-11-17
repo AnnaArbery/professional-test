@@ -1,6 +1,17 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  IAnswer,
+  IEmploymentTitle,
+  INeeds,
+  IUserState,
+  IUser,
+  EmploymentTitleLocal,
+  AnswersLocal,
+  NeedsLocal,
+  SelectedLocal,
+} from '../types/IUser';
 
-const defalutState = {
+const defalutState: IUserState = {
   user: {
     name: '',
     year: '',
@@ -12,74 +23,81 @@ const defalutState = {
   step: 0,
   auth: false,
   answers: {},
-  needs: 0,
-  employment: 0,
-  employmentTitle: [],
-  selected: {}
+  needs: {},
+  employment: [],
+  employmentTitle: {},
+  selected: {},
+};
+
+let localUserStorage = window.localStorage.getItem('user');
+let localUser: IUser;
+if (localUserStorage) {
+  localUser = JSON.parse(localUserStorage);
 }
 
-let localUser = window.localStorage.getItem('user') ;
-if (localUser) {
-  localUser = JSON.parse(localUser)
+let localAnswersStorage = window.localStorage.getItem('answers');
+let localAnswers: AnswersLocal;
+if (localAnswersStorage) {
+  localAnswers = JSON.parse(localAnswersStorage);
 }
 
-let localAnswers = window.localStorage.getItem('answers');
-if (localAnswers) {
-  localAnswers = JSON.parse(localAnswers)
+let localSelectedStorage = window.localStorage.getItem('selected');
+let localSelected: SelectedLocal;
+if (localSelectedStorage) {
+  localSelected = JSON.parse(localSelectedStorage);
 }
 
-let localSelected = window.localStorage.getItem('selected');
-if (localSelected) {
-  localSelected = JSON.parse(localSelected)
-  
-}
-const keysLocalSelected = Object.keys(localSelected || []);
-const initialNeeds = {};
-const initialEmloyment = [0, 0, 0, 0];
+const keysLocalSelected: string[] = Object.keys(localSelected || []);
+const initialNeeds: NeedsLocal = {};
+const initialEmloyment: number[] = [0, 0, 0, 0];
 
-if (keysLocalSelected.length > 0) {
+if (Object.keys(keysLocalSelected).length > 0) {
   keysLocalSelected.forEach(value => {
     const [col, row] = value;
 
-    if (!initialEmloyment[col]) initialEmloyment[col] = 0;
-    initialEmloyment[col] +=  localSelected[value];
+    if (!initialEmloyment[Number(col)]) initialEmloyment[Number(col)] = 0;
+    initialEmloyment[Number(col)] += localSelected[Number(value)];
 
     if (!initialNeeds[row]) initialNeeds[row] = 0;
-    initialNeeds[row] += localSelected[value];
-  })
+    initialNeeds[row] += localSelected[Number(value)];
+  });
 }
 
-let localEmploymentTitle = window.localStorage.getItem('employmentTitle');
-if (localEmploymentTitle) {
-  localEmploymentTitle = JSON.parse(localEmploymentTitle);
+let localEmploymentTitleStorage = window.localStorage.getItem('employmentTitle');
+let localEmploymentTitle: EmploymentTitleLocal;
+if (localEmploymentTitleStorage) {
+  localEmploymentTitle = JSON.parse(localEmploymentTitleStorage);
 }
 
-const localState = {
-  user: localUser || {...defalutState.user},
-  answers: localAnswers || {...defalutState.answers},
-  needs: initialNeeds || {...defalutState.needs},
-  employment: initialEmloyment || {...defalutState.employment},
-  employmentTitle: localEmploymentTitle || {...defalutState.employmentTitle},
-  selected: localSelected || {...defalutState.selected},
+const localState: Omit<IUserState, 'step' | 'auth'> = {
+  user: localUser || { ...defalutState.user },
+  answers: localAnswers || { ...defalutState.answers },
+  needs: initialNeeds || { ...defalutState.needs },
+  employment: initialEmloyment || { ...defalutState.employment },
+  employmentTitle: localEmploymentTitle || { ...defalutState.employmentTitle },
+  selected: localSelected || { ...defalutState.selected },
 };
 
 const userSlice = createSlice({
   name: 'user',
-  initialState : {
+  initialState: {
     ...defalutState,
-    ...localState
+    ...localState,
   },
   reducers: {
-    setUser(state, { payload }) {
+    setUser(state, action) {
+      const { payload } = action;
       state.user = { ...payload };
       state.auth = true;
       localStorage.setItem('user', JSON.stringify(state.user));
     },
-    setStep(state, {payload}) {
+    setStep(state, action) {
+      const { payload } = action;
       if (!state.auth) return;
       state.step = payload;
     },
-    addAnswers(state, {payload: { id, module, val } }) {
+    addAnswers(state, action: PayloadAction<IAnswer>) {
+      const { id, module, val } = action.payload;
       if (!state.answers[id]) state.answers[id] = {};
       if (!state.answers[id][module]) state.answers[id][module] = [];
       if (!state.answers[id][module].includes(val)) {
@@ -87,20 +105,24 @@ const userSlice = createSlice({
       }
       localStorage.setItem('answers', JSON.stringify(state.answers));
     },
-    setNeeds(state, {payload: {title, value, id, count}} ) {
+    setNeeds(state, action: PayloadAction<INeeds>) {
+      const { id, title, value, count } = action.payload;
       state.needs[title] = value;
       state.selected[`${id[0]}${id[1]}`] = count;
       localStorage.setItem('selected', JSON.stringify(state.selected));
     },
-    setEmpoyment(state, {payload}) {
-      state.employment = [...payload]
+    setEmpoyment(state, action) {
+      const { payload } = action;
+      state.employment = [...payload];
     },
-    setEmploymentTitle(state, {payload:{id, title}}) {
+    setEmploymentTitle(state, action: PayloadAction<IEmploymentTitle>) {
+      const { id, title } = action.payload;
       state.employmentTitle[id] = title;
       localStorage.setItem('employmentTitle', JSON.stringify(state.employmentTitle));
     },
-    removeAnswers(state, { payload: { id, module, val } }) {
-      state.answers[id][module] = state.answers[id][module].filter((value) => value !== val);
+    removeAnswers(state, action: PayloadAction<IAnswer>) {
+      const { id, module, val } = action.payload;
+      state.answers[id][module] = state.answers[id][module].filter(value => value !== val);
       if (state.answers[id][module].length === 0) {
         delete state.answers[id][module];
       }
@@ -116,7 +138,7 @@ const userSlice = createSlice({
       localStorage.removeItem('employmentTitle');
 
       return defalutState;
-    }
+    },
   },
 });
 
@@ -128,6 +150,8 @@ export const {
   setNeeds,
   setEmpoyment,
   setEmploymentTitle,
-  clear
+  clear,
 } = userSlice.actions;
+
 export default userSlice.reducer;
+export const userActions = userSlice.actions;

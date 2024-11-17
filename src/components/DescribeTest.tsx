@@ -1,14 +1,11 @@
 import React from 'react';
 import parse from 'html-react-parser';
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../hooks/useStoreHooks';
 
 const DescribeTest = () => {
-  const describe = useSelector(state => state.content.describe);
+  const describe = useAppSelector(state => state.content.describe);
 
-  return (
-    <div className='b-txt'>
-      {parse(describe || '')}
-    </div>
-)};
+  return <div className="b-txt">{parse(describe || '')}</div>;
+};
 
 export default DescribeTest;

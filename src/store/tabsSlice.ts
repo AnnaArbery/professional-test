@@ -1,29 +1,41 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit'
+import ITab from '@/types/ITab';
 
-const initialState = {
+type Titles = {
+  id: number,
+  tab: string
+}
+type TabState = {
+  tabs: ITab[],
+  titles: Titles[],
+  status: string
+}
+
+const initialState: TabState = {
   tabs: [],
-  titles: 0,
+  titles: [],
   status: null,
 };
 
-const fetchTabs = createAsyncThunk(
+const fetchTabs = createAsyncThunk<ITab[]>(
   'steps/fetchTabs',
   async () => {
     const res = await fetch(process.env.URL_TABS)
     const data = await res.json();
-    return data;
+    return data as ITab[];
   }
 );
 
 const tabsSlice = createSlice({
   name: 'tabs',
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTabs.pending, state => {
         state.status = 'loading'
       })
-      .addCase(fetchTabs.fulfilled, (state, action) => {
+      .addCase(fetchTabs.fulfilled, (state, action: PayloadAction<ITab[]>) => {
         state.tabs = action.payload
         state.titles = action.payload.reduce((acc, {id, tab}) => {
           acc.push({id, tab})

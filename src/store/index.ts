@@ -4,7 +4,7 @@ import stepsReducer from './stepsSlice'
 import tabsReducer from './tabsSlice'
 import contentReducer from './contentSlice'
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     user: userReducer,
     steps: stepsReducer,
@@ -12,3 +12,7 @@ export default configureStore({
     content: contentReducer
   },
 });
+
+export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

@@ -8,12 +8,13 @@
 `npm run start` - запуск разработки  
 `npm run build` - запуск сборки  
 `npm run analyz` - анализ сборки
+`npm run analyz` - анализ сборки
 
 ### Переменные окружения
 
-URL_STEPS  
-URL_TABS  
-URL_CONTENT  
+URL_STEPS="./store/steps.json"  
+URL_TABS="./store/tabs.json"  
+URL_CONTENT="./store/content.json"  
 FIREBASE_API_KEY  
 FIREBASE_AUTH_DOMAIN  
 FIREBASE_PROJECT_ID  
@@ -25,3 +26,10 @@ FIREBASE_APP_ID
 
 `react-datapick` - тяжелый скрипт датапикера  
 `jsCalendar` - самый легкий скрипт датапикера, но с необходимостью доп.настроек
+
+### Доработать
+
+./src/components/UI/DatepickerCal/DatepickerCal.tsx - типизация ref c datapicker  
+./src/hooks/useClickOutside.ts - типизация ref, target  
+./src/hooks/useScript.ts - типизация созданного document.querySelector, аттрибутов  
+./src/hooks/useFetchRedux.ts - cb

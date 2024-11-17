@@ -1,13 +1,25 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit'
 
-const initialState = {
+type ContentState = {
+  describe: string,
+  titles: string[],
+  employment: string[],
+  status: string
+}
+type ContentResponse = [
+  string,
+  string[],
+  string[]
+]
+
+const initialState: ContentState = {
   describe: '',
   titles: [],
   employment: [],
   status: null
 };
 
-const fetchContent = createAsyncThunk(
+const fetchContent = createAsyncThunk<ContentResponse>(
   'content/fetchContent',
   async () => {
     const res = await fetch(process.env.URL_CONTENT)
@@ -19,13 +31,14 @@ const fetchContent = createAsyncThunk(
 const contentSlice = createSlice({
   name: 'content',
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchContent.pending, state => {
         state.status = 'loading'
       })
-      .addCase(fetchContent.fulfilled, (state, {payload}) => {
-        const [descrbe = '', titles = [], employment = []] = payload;
+      .addCase(fetchContent.fulfilled, (state, action: PayloadAction<ContentResponse> ) => {
+        const [descrbe = '', titles = [], employment = []] = action.payload;
 
         state.describe = descrbe;
         state.titles = titles;

@@ -1,31 +1,38 @@
-import React, {useRef, useEffect} from 'react';
+import React, { useRef, useEffect, MouseEvent } from 'react';
 import './Checkbox.scss';
 
-const Checkbox = ({value, handleCheckbox, enable, checked, ...props }) => {
-  const ref = useRef();
-  const setChecked = (e) => {
+type CheckboxProps = {
+  value: string;
+  handleCheckbox: (count: number, value: string) => void;
+  enable: boolean;
+  checked: boolean;
+};
+
+const Checkbox = ({ value, handleCheckbox, enable, checked, ...props }: CheckboxProps) => {
+  const ref = useRef<HTMLInputElement>();
+  const setChecked = (e: MouseEvent<HTMLInputElement>) => {
     const count = ref.current.checked ? 1 : -1;
     if (!enable && count > 0) e.preventDefault();
-    handleCheckbox(count, ref.current.value)
-  }
+    handleCheckbox(count, ref.current.value);
+  };
   useEffect(() => {
-    if(checked) {
+    if (checked) {
       handleCheckbox(1, ref.current.value);
       ref.current.checked = true;
     }
-  }, [])
+  }, []);
 
   return (
-    <label className='checkbox'>
+    <label className="checkbox">
       <input
-        className='checkbox__input'
-        type='checkbox'
+        className="checkbox__input"
+        type="checkbox"
         onClick={setChecked}
         value={value}
         {...props}
         ref={ref}
       />
-      <span className='checkbox__title'>{value}</span>
+      <span className="checkbox__title">{value}</span>
     </label>
   );
 };

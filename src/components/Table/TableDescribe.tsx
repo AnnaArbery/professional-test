@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
 import parse from 'html-react-parser';
 import clsx from 'clsx'
+import Itab from '../../types/ITab';
 
-const TableDescribe = ({id: idTab, tabs}) => {
+type TableDescribeProps = {
+  id: number,
+  tabs: Itab[]
+}
+const TableDescribe = ({id: idTab, tabs}: TableDescribeProps) => {
   const [currentTab, setCurrentTab] = useState(idTab);
   const [current] = tabs.filter(tab => tab.id === currentTab);
 

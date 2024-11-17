@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useAppDispatch } from './useStoreHooks';
 
-export default (cb, loaded = false) => {
-  const dispatch = useDispatch();
+export default (cb, loaded: boolean = false) => {
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (loaded) return;
     dispatch(cb());
-  }, [cb, dispatch])
-}
+  }, [cb, dispatch]);
+};

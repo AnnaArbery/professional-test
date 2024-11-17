@@ -8,7 +8,6 @@
 `npm run start` - запуск разработки  
 `npm run build` - запуск сборки  
 `npm run analyz` - анализ сборки
-`npm run analyz` - анализ сборки
 
 ### Переменные окружения
 

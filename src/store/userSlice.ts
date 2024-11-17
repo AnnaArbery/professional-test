@@ -51,15 +51,15 @@ const keysLocalSelected: string[] = Object.keys(localSelected || []);
 const initialNeeds: NeedsLocal = {};
 const initialEmloyment: number[] = [0, 0, 0, 0];
 
-if (Object.keys(keysLocalSelected).length > 0) {
+if (keysLocalSelected.length > 0) {
   keysLocalSelected.forEach(value => {
     const [col, row] = value;
 
     if (!initialEmloyment[Number(col)]) initialEmloyment[Number(col)] = 0;
-    initialEmloyment[Number(col)] += localSelected[Number(value)];
+    initialEmloyment[Number(col)] += localSelected[value];
 
     if (!initialNeeds[row]) initialNeeds[row] = 0;
-    initialNeeds[row] += localSelected[Number(value)];
+    initialNeeds[row] += localSelected[value];
   });
 }
 
@@ -107,7 +107,10 @@ const userSlice = createSlice({
     },
     setNeeds(state, action: PayloadAction<INeeds>) {
       const { id, title, value, count } = action.payload;
-      state.needs[title] = value;
+      if (value == 0) delete state.needs[title];
+      else {
+        state.needs[title] = value;
+      }
       state.selected[`${id[0]}${id[1]}`] = count;
       localStorage.setItem('selected', JSON.stringify(state.selected));
     },

@@ -90,33 +90,33 @@ const ResultUserCheck = () => {
       {keysNeeds.length > 0 && (
         <div className="mt-10">
           <h2 className="title-h2">Таблица потребностей</h2>
-          {keysNeeds.map(value => (
-            <div
-              className="flex py-2 justify-between border-b border-b-brown border-1 sm:block"
-              key={value}>
-              <span className="block font-bold text-brown">{tabsNeeds[value]}</span>
-              <span>{needs[value]}</span>
-            </div>
-          ))}
+          {keysNeeds.map(value => {
+            if (needs[value] === 0) return;
+            return (
+              <div
+                className="flex py-2 justify-between border-b border-b-brown border-1 sm:block"
+                key={value}>
+                <span className="block font-bold text-brown">{tabsNeeds[value]}</span>
+                <span>{needs[value]}</span>
+              </div>
+            );
+          })}
         </div>
       )}
 
       {keysNeeds.length > 0 && (
         <div className="mt-10">
           <h2 className="title-h2">Таблица профессий</h2>
-          {employment.map((value, idx) => {
-            if (value === 0) return false;
-            return (
-              <div
-                className="flex py-2 justify-between border-b border-b-brown border-1 sm:block"
-                key={idx}>
-                <span className="block font-bold text-brown">
-                  {employmentTitle[idx] || titlesDefault[idx]}
-                </span>
-                <span>{value}</span>
-              </div>
-            );
-          })}
+          {employment.map((value, idx) => (
+            <div
+              className="flex py-2 justify-between border-b border-b-brown border-1 sm:block"
+              key={idx}>
+              <span className="block font-bold text-brown">
+                {employmentTitle[idx] || titlesDefault[idx]}
+              </span>
+              <span>{value}</span>
+            </div>
+          ))}
         </div>
       )}
     </div>

@@ -11,8 +11,6 @@ const Steps = () => {
     setCurrent(steps[step - 1]);
   }, [step, steps]);
 
-  console.log(current);
-
   return <StepItem {...current} step={step} />;
 };
 
